@@ -17,11 +17,11 @@
 
     reverse_proxy {$BACKEND_HOST} # proxy all requests for /* to the frontend, configure this variable in the service settings
        
-    #route /* {
-    #    # Enable CORS for multiple origins
-    #    header Access-Control-Allow-Origin https://karensama.com, https://www.karensama.com
-    #    header Access-Control-Allow-Methods GET, POST, PUT, DELETE, OPTIONS
-    #    header Access-Control-Allow-Headers *
-    #    header Access-Control-Allow-Credentials true
-    #}
+    route /link {
+        # Enable CORS for multiple origins
+        header Access-Control-Allow-Origin https://karensama.com, https://www.karensama.com
+        header Access-Control-Allow-Methods GET, POST, PUT, DELETE, OPTIONS
+        header Access-Control-Allow-Headers *
+        header Access-Control-Allow-Credentials true
+    }
 }
