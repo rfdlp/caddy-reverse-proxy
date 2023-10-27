@@ -17,15 +17,19 @@
 
     reverse_proxy {$BACKEND_HOST} # proxy all requests for /* to the frontend, configure this variable in the service settings
 
-    # the handle_path directive will strip /api/ from the path before proxying
-    # this is needed if your backend's api routes don't start with /api/
-    # change paths as needed
-    # handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
-    #     reverse_proxy {$BACKEND_HOST} # proxy all requests for /api/* to the backend, configure this variable in the service settings
-    # }
-
-    # if your backend's api routes do start with /api/ then you wouldn't want to strip the path prefix
-    # if so, comment out the above handle_path block, and uncomment this reverse_proxy directive
-    # change paths as needed
-    # reverse_proxy {$BACKEND_HOST} # configure this variable in the service settings
+    # Enable CORS for multiple origins
+    @cors {
+        header Access-Control-Allow-Origin https://karensama.com, https://www.karensama.com
+        header Access-Control-Allow-Methods GET, POST, PUT, DELETE, OPTIONS
+        header Access-Control-Allow-Headers *
+    }
+    
+    route {
+        uri /* {
+            # Apply the CORS headers to the /api/ routes
+            @cors {
+                header Access-Control-Allow-Credentials true
+            }
+        }
+    }
 }
